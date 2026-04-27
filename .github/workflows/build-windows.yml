@@ -49,9 +49,23 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Upload built exe
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshot.${{ env.VERSION }}.zip
+          path: |
+              D:\a\voicebox-feature-rocm-windows-support\voicebox-feature-rocm-windows-support\tauri\src-tauri\target\release\voicebox.exe
+              D:\a\voicebox-feature-rocm-windows-support\voicebox-feature-rocm-windows-support\tauri\src-tauri\target\release\voicebox-server.exe
+              D:\a\voicebox-feature-rocm-windows-support\voicebox-feature-rocm-windows-support\tauri\src-tauri\target\release\voicebox-server-x86_64-pc-windows-msvc.exe
+              D:\a\voicebox-feature-rocm-windows-support\voicebox-feature-rocm-windows-support\backend\dist\voicebox.exe
+              D:\a\voicebox-feature-rocm-windows-support\voicebox-feature-rocm-windows-support\backend\dist\voicebox-server.exe
+              D:\a\voicebox-feature-rocm-windows-support\voicebox-feature-rocm-windows-support\backend\dist\voicebox-server-x86_64-pc-windows-msvc.exe
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: dW50cnVzdGVkIGNvbW1lbnQ6IHJzaWduIGVuY3J5cHRlZCBzZWNyZXQga2V5ClJXUlRZMEl5YTBGV3JiTy9lRDZVd3NkL0RoQ1htZmExNDd3RmJaNmRMT1ZGVjczWTBKZ0FBQkFBQUFBQUFBQUFBQUlBQUFBQWdMekUzVkE4K0tWQ1hjeGt1Vkx2QnRUR3pzQjVuV0ZpM2czWXNkRm9hVUxrVnB6TUN3K1NheHJMREhQbUVWVFZRK3NIL1VsMDBHNW5ET1EzQno0UStSb21nRW4vZlpTaXIwZFh5ZmRlL1lSN0dKcHdyOUVPclVvdzFhVkxDVnZrbHM2T1o4Tk1NWEU9Cg==
         with:
           projectPath: tauri
           tagName: v__VERSION__
